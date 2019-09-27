@@ -12,7 +12,7 @@ def _get_bounds_(image):
     '''
     y = [] #list of row indices that have at least one non zero value
     for i, row in enumerate(image.reshape(28,28)):
-        if np.any(row > 70/):
+        if np.any(row > 70):
             y.append(i)
     return y[0], y[-1]
 
