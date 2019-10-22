@@ -28,7 +28,8 @@ def cut_image(n, X, Y):
 
 def generate_image(X, Y):
     '''
-    generates a random sequence of handwritten numbers
+    Return a random sequence of handwritten numbers.
+    
     to a 30 * 200 canvas
     @param numpy.array X: array containing images
     @param numpy.array T: array containing corresponding labels
