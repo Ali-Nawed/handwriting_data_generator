@@ -65,21 +65,22 @@ def generate_image(X, Y):
         #where to place the image
         digit_h, digit_w = digit.shape
         bottom_left_point_x = np.random.randint(sep_len//2) + i*sep_len
-        bottom_left_point_y = height - np.random.randint(height//3)
+        bottom_left_point_y = np.random.randint(height//3)
 
         x_vals.append((bottom_left_point_x, bottom_left_point_y, digit_h, digit_w))
 
-        canvas[bottom_left_point_y-digit_h:bottom_left_point_y,
+        canvas[bottom_left_point_y:bottom_left_point_y+digit_h,
                bottom_left_point_x:bottom_left_point_x+digit_w] += digit
 
     return canvas, x_vals, y_vals
 
 def show_boxes(image, box_list):
     """Plot image with bounding boxes."""
+
     _, ax = plt.subplots(1)
     ax.imshow(image, cmap='gray')
     for box in box_list:
-        box = Rectangle(xy=(box[0],box[1]-box[2]+1), width= box[3], height=box[2], facecolor='none', edgecolor='r')
+        box = Rectangle(xy=(box[0],box[1]), width= box[3], height=box[2], facecolor='none', edgecolor='r')
         ax.add_patch(box)   
     plt.show()
 
