@@ -8,7 +8,9 @@ representing the digit within each bounding box.
 
 import numpy as np
 import cv2
-
+import matplotlib.pyplot as plt
+from matplotlib.collections import PatchCollection
+from matplotlib.patches import Rectangle
 
 def _get_bounds_(image):
 
@@ -62,20 +64,24 @@ def generate_image(X, Y):
 
         #where to place the image
         digit_h, digit_w = digit.shape
-        top_right_point_x = np.random.randint(sep_len//2) + i*sep_len
-        top_right_point_y = np.random.randint(height//2)
+        bottom_left_point_x = np.random.randint(sep_len//2) + i*sep_len
+        bottom_left_point_y = height - np.random.randint(height//3)
 
-        x_vals.append((top_right_point_x, top_right_point_y, digit_h, digit_w))
+        x_vals.append((bottom_left_point_x, bottom_left_point_y, digit_h, digit_w))
 
-        canvas[top_right_point_y:top_right_point_y+digit_h,
-               top_right_point_x:top_right_point_x+digit_w] += digit
+        canvas[bottom_left_point_y-digit_h:bottom_left_point_y,
+               bottom_left_point_x:bottom_left_point_x+digit_w] += digit
 
     return canvas, x_vals, y_vals
 
 def show_boxes(image, box_list):
     """Plot image with bounding boxes."""
-    
-    pass
+    _, ax = plt.subplots(1)
+    ax.imshow(image, cmap='gray')
+    for box in box_list:
+        box = Rectangle(xy=(box[0],box[1]-box[2]+1), width= box[3], height=box[2], facecolor='none', edgecolor='r')
+        ax.add_patch(box)   
+    plt.show()
 
 def generate_data(N, X, Y):
     """Generate custom dataset."""
