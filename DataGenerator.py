@@ -6,9 +6,11 @@ returns an image, a list of bounding boxes and a list of target values
 representing the digit within each bounding box.
 """
 
+import os
+import pandas as pd
 import numpy as np
-import cv2
 import matplotlib.pyplot as plt
+from PIL import Image
 from matplotlib.collections import PatchCollection
 from matplotlib.patches import Rectangle
 
@@ -84,7 +86,26 @@ def show_boxes(image, box_list):
         ax.add_patch(box)   
     plt.show()
 
-def generate_data(N, X, Y):
+def generate_data(num_images, dir, X, Y):
     """Generate custom dataset."""
+    data = {'filename': [], 'boxes': [], 'labels': []}
+    dir = dir.strip('/')
+    
+    if dir not in os.listdir('.'):
+        os.mkdir(dir)
+    
+    for i in range(num_images):
+        filename = f"img_{i}.png"
+        image, boxes, labels = generate_image(X,Y)
+        
+        data['filename'].append(filename)
+        data['boxes'].append(boxes)
+        data['labels'].append(labels)
 
-    pass
+        image = Image.fromarray(image.astype('uint8'), 'L')
+
+        image.save(f"./{dir}/{filename}", "png")
+
+    data = pd.DataFrame(data)
+
+    data.to_csv(f"./{dir}/image_data.csv")
