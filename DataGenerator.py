@@ -13,9 +13,9 @@ import matplotlib.pyplot as plt
 from PIL import Image
 from matplotlib.collections import PatchCollection
 from matplotlib.patches import Rectangle
+from tqdm import tqdm
 
 def _get_bounds_(image):
-
     """Find the top and bottom indices for the row values that encompasses an image."""
 
     row_list = [] #list of row indices that have at least one non zero value
@@ -90,11 +90,11 @@ def generate_data(num_images, dir, X, Y):
     """Generate custom dataset."""
     data = {'filename': [], 'boxes': [], 'labels': []}
     dir = dir.strip('/')
-    
+
     if dir not in os.listdir('.'):
         os.mkdir(dir)
     
-    for i in range(num_images):
+    for i in tqdm(range(num_images)):
         filename = f"img_{i}.png"
         image, boxes, labels = generate_image(X,Y)
         
