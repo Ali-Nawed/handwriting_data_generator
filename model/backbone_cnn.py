@@ -10,11 +10,6 @@ import torchvision
 import torchvision.transforms as transforms
 from torch.utils.data import Dataset, DataLoader
 
-
-X = pd.read_csv('../data/train.csv')
-Y = np.array(X['label'])
-X = np.array(X.drop(columns=['label']))
-
 class BackboneNet(nn.Module):
     def __init__(self):
         super(BackboneNet, self).__init__()
