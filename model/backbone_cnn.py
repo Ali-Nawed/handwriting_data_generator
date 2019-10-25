@@ -21,6 +21,7 @@ class BackboneNet(nn.Module):
         self.fc2 = nn.Linear(50, 10)
 
     def forward(self, x):
+        x = x
         x = self.pool(F.relu(self.conv1(x)))
         x = self.pool(F.relu(self.conv2(x)))
         x = x.view(-1, 64*7*7)
